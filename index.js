@@ -6,6 +6,8 @@ const servidor = express();
 servidor.get("/", (solicitud, respuesta) => {
     respuesta.json({
         saludo: "Proyecto Backend",
+        nombre: "Cristhian",
+        apellido: "Vanegas"
     })
 });
 
