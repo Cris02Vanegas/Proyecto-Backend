@@ -1,19 +1,7 @@
-"use strict"
-const express = require("express");
+//Aqui importo el servidor de EXPRESS
+import servidor from "./servidor.js"
 
-const servidor = express();
-
-servidor.get("/", (solicitud, respuesta) => {
-    respuesta.json({
-        saludo: "Proyecto Backend",
-        nombre: "Cristhian",
-        apellido: "Vanegas"
-    })
+//Aqui enciendo el servidor y lo pongo a escuchar peticion en el puerto 3000
+servidor.listen(3000, () => {
+    console.log("Servidor corriendo en el puerto 3000");
 });
-
-servidor.get("/xxx", (solicitud, respuesta) => {
-    respuesta.redirect(301, "https://bit.institute/"); // sirve para redireccionar la pg cuando no hay respuesta del enlace
-})
-
-servidor.listen(3000);
-console.log("Servidor corriendo en el puerto 3000");
