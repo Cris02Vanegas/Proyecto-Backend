@@ -4,6 +4,7 @@ import enrutadorUsuarios from "./rutas/rutaUsuarios.js";
 
 const servidor = express();
 
+servidor.use(express.json())
 servidor.use("/usuarios", enrutadorUsuarios)
 
 servidor.get("/", (solicitud, respuesta) => {
