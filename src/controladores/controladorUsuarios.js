@@ -1,32 +1,24 @@
+import modeloUsuario from "../modelos/modeloUsuario.js"
+
 const ControladorUsuarios = {
     //Crear usuario
     crearUsuario: async (solicitud, respuesta) => {
         try {
-            console.log("solicitud body", solicitud.body);
-            if (solicitud.body.nombre === "") throw new Error("Error falta el nombre");
-            if (solicitud.body.usuario === "") throw new Error("Error falta el usuario");
-            if (solicitud.body.correo === "") throw new Error("Error falta el correo");
-            if (solicitud.body.telefono === 0) throw new Error("Error falta el telefono");
-            if (solicitud.body.contrasenia === "") throw new Error("Error falta la contrasenia");
-            if (solicitud.body.confirmarContrasenia === "") throw new Error("Error falta la confirmarContrasenia");
-            if (solicitud.body.genero === "") throw new Error("Error falta el genero");
-            if (solicitud.body.pais === "") throw new Error("Error falta el pais");
-            if (solicitud.body.ciudad === "") throw new Error("Error falta la ciudad");
-            if (solicitud.body.fechaNacimiento === "") throw new Error("Error falta la fechaNacimiento");
-            if (solicitud.body.profesion === "") throw new Error("Error falta la profesion");
-            if (solicitud.body.preguntaSeguridad === "") throw new Error("Error falta la preguntaSeguridad");
-            if (solicitud.body.respuestaSeguridad === "") throw new Error("Error falta la respuestaSeguridad");
-            if (solicitud.body.cedula === 0) throw new Error("Error falta la cedula ");
-            if (solicitud.body.fechaExpedicionCedula === "") throw new Error("Error falta la fechaExpedicionCedula");
+            const nuevoUsuario = new modeloUsuario(solicitud.body);
+            const usuarioCreado = await nuevoUsuario.save();
+            if (usuarioCreado._id) {
+                respuesta.json({
+                    resultado: "Bien",
+                    mensaje: "Usuario creado!!",
+                    datos: usuarioCreado,
+                });
+            }
 
-            respuesta.json({
-                mensaje: "POST Crear usuarios Works!!!"
-            });
         } catch (error) {
-            console.log(error);
             respuesta.json({
-                error: true,
-                mensaje: "POST Ocurrio un error al crear usuario"
+                resultado: "Mal",
+                mensaje: "Ocurrio un error al crear usuario!!",
+                datos: error,
             });
         }
     },
@@ -34,15 +26,19 @@ const ControladorUsuarios = {
     //leer un usuario
     leerUsuario: async (solicitud, respuesta) => {
         try {
-            console.log(solicitud.params.id);
-            respuesta.json({
-                mensaje: "GET Leer Usuario Works!!!"
-            });
+            const usuarioEncontrado = await modeloUsuario.findById(solicitud.params.id);
+            if (usuarioEncontrado._id) {
+                respuesta.json({
+                    resultado: "Bien",
+                    mensaje: "Usuario leído",
+                    datos: usuarioEncontrado,
+                });
+            }
         } catch (error) {
-            console.log(error);
             respuesta.json({
-                error: true,
-                mensaje: "POST Ocurrio un error al leer usuario"
+                resultado: "Mal",
+                mensaje: "Ocurrio un error al leer un usuario!!",
+                datos: error,
             });
         }
     },
@@ -50,46 +46,58 @@ const ControladorUsuarios = {
     //Leer Usuarios
     leerUsuarios: async (solicitud, respuesta) => {
         try {
+            const usuariosEncontrados = await modeloUsuario.find();
             respuesta.json({
-                mensaje: "GET Leer Usuarios Works!!!"
+                resultado: "Bien",
+                mensaje: "Usuarios leídos",
+                datos: usuariosEncontrados,
             });
         } catch (error) {
-            console.log(error);
             respuesta.json({
-                error: true,
-                mensaje: "POST Ocurrio un error al leer TODOS los usuarios"
+                resultado: "Mal",
+                mensaje: "Ocurrio un error al leer los usuarios!!",
+                datos: error,
             });
         }
 
     },
 
+    //ActualizarUsuario
     actualizarUsuarios: async (solicitud, respuesta) => {
         try {
-            console.log("id: ", solicitud.params.id);
-            console.log("solicitud body", solicitud.body);
-            respuesta.json({
-                mensaje: "PUT Actualizar Usuario Works!!!"
-            });
+            const updateUsuario = await modeloUsuario.findByIdAndUpdate(solicitud.params.id, solicitud.body);
+            if (updateUsuario._id) {
+                respuesta.json({
+                    resultado: "Bien",
+                    mensaje: "Usuario actualizado",
+                    datos: updateUsuario,
+                });
+            }
         } catch (error) {
-            console.log(error);
             respuesta.json({
-                error: true,
-                mensaje: "POST Ocurrio un error al actualizar usuario"
+                resultado: "Mal",
+                mensaje: "Ocurrio un error al actualizar el usuario!!",
+                datos: error,
             });
         }
     },
 
+    //EliminarUsuariopost    
     eliminarUsuarios: async (solicitud, respuesta) => {
         try {
-            console.log("id: ", solicitud.params.id);
-            respuesta.json({
-                mensaje: "DELETE Eliminar Usuario Works!!!"
-            });
+            const usuarioEliminado = await modeloUsuario.findByIdAndDelete(solicitud.params.id);
+            if (usuarioEliminado._id) {
+                respuesta.json({
+                    resultado: "Bien",
+                    mensaje: "Usuario eliminado",
+                    datos: null,
+                });
+            }
         } catch (error) {
-            console.log(error);
             respuesta.json({
-                error: true,
-                mensaje: "POST Ocurrio un error al eliminar usuario"
+                resultado: "Mal",
+                mensaje: "Ocurrio un error al eliminar un usuario!!",
+                datos: error,
             });
         }
     }
@@ -97,18 +105,5 @@ const ControladorUsuarios = {
 
 export default ControladorUsuarios;
 
-/* const usuario = {
-    nombre: "Cristhian Vanegas",
-    usuario: "cris02",
-    correo: "crisvanegas02@gmail.com",
-    telefono: "3125407212",
-    contrasenia: "cris12345",
-    confirmarContrasenia: "cris12345",
-    genero: "M",
-    pais: "Colombia",
-    ciudad: "Bogota",
-    fechaNacimiento: "02 de abril de 1993",
-    profesion: "Ingeniero Electrónico",
-    preguntaSeguridad: "fecha de expedicion de su cédula",
-    respuestaSeguridad: "04/04/2011"
+/* const usuario = 
 } */

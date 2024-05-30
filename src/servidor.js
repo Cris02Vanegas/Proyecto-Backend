@@ -1,9 +1,11 @@
 // Se trae el servidor de EXPRESS
 import express from "express";
+import morgan from "morgan";
 import enrutadorUsuarios from "./rutas/rutaUsuarios.js";
 
 const servidor = express();
 
+servidor.use(morgan("dev"))
 servidor.use(express.json())
 servidor.use("/usuarios", enrutadorUsuarios)
 
