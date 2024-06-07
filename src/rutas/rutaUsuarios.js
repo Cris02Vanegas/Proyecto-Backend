@@ -5,16 +5,13 @@ const enrutadorUsuarios = Router();
 
 enrutadorUsuarios.post("/", ControladorUsuarios.crearUsuario);
 
-enrutadorUsuarios.get("/", ControladorUsuarios.leerUsuarios)
+enrutadorUsuarios.get("/", ControladorUsuarios.leerUsuarios);
 
+enrutadorUsuarios.get("/:id", ControladorUsuarios.leerUsuario);
 
-enrutadorUsuarios.get("/:id", ControladorUsuarios.leerUsuario)
+enrutadorUsuarios.put("/:id", ControladorUsuarios.actualizarUsuarios);
 
-
-enrutadorUsuarios.put("/:id", ControladorUsuarios.actualizarUsuarios)
-
-
-enrutadorUsuarios.delete("/:id", ControladorUsuarios.eliminarUsuarios)
+enrutadorUsuarios.delete("/:id", ControladorUsuarios.eliminarUsuarios);
 
 
 export default enrutadorUsuarios;
