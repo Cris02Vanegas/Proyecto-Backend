@@ -26,7 +26,6 @@ const controladorInicioSesion = {
           mensaje: "Acceso permitido",
           datos: token,
         });
-        console.log(usuarioEncontrado);
       } else {
         respuesta.json({
           resultado: "mal",
