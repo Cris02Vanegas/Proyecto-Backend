@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { generarToken } from "../tools/funciones.js";
+import { generarToken, verificarToken } from "../tools/funciones.js";
 import modeloUsuario from "../modelos/modeloUsuario.js";
 
 const controladorInicioSesion = {
@@ -37,6 +37,34 @@ const controladorInicioSesion = {
       respuesta.json({
         resultado: "mal",
         mensaje: "Ocurrio un error al iniciar sesion",
+        datos: error,
+      });
+    }
+  },
+
+  validarToken: async (solicitud, respuesta) => {
+    try {
+      const token = solicitud.params.token;
+      const decodificado = await verificarToken(token);
+      console.log(decodificado);
+
+      if (decodificado.decodificado.id) {
+        respuesta.json({
+          resultado: "bien",
+          mensaje: "token válido",
+          datos: decodificado,
+        });
+      } else {
+        respuesta.json({
+          resultado: "mal",
+          mensaje: "Token no válido",
+          datos: null,
+        });
+      }
+    } catch (error) {
+      respuesta.json({
+        resultado: "mal",
+        mensaje: "Ocurrio un error al verificar el token",
         datos: error,
       });
     }
