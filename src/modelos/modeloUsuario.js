@@ -6,6 +6,7 @@ const esquemaUsuario = new Schema({
   correo: { type: String, required: true },
   telefono: { type: String, required: false },
   contrasenia: { type: String, required: true },
+  ciudad: { type: String, required: true },
   /* confirmarContrasenia: { type: String, required: true },
         genero: { type: String, required: false },
         pais: { type: String, required: true },
