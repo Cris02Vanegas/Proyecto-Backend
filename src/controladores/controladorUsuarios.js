@@ -5,16 +5,13 @@ const ControladorUsuarios = {
   //Crear usuario
   crearUsuario: async (solicitud, respuesta) => {
     try {
-      const { nombre, usuario, correo, telefono, contrasenia, cedula } =
-        solicitud.body;
+      const { nombre, correo, telefono, contrasenia } = solicitud.body;
       const contraseniaProtegida = await bcrypt.hash(contrasenia, 10);
       const nuevoUsuario = new modeloUsuario({
         nombre,
-        usuario,
         correo,
         telefono,
         contrasenia: contraseniaProtegida,
-        cedula,
       });
       const usuarioCreado = await nuevoUsuario.save();
       if (usuarioCreado._id) {

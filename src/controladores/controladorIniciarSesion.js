@@ -46,7 +46,6 @@ const controladorInicioSesion = {
     try {
       const token = solicitud.params.token;
       const decodificado = await verificarToken(token);
-      console.log(decodificado);
 
       if (decodificado.decodificado.id) {
         respuesta.json({

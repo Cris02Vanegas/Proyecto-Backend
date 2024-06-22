@@ -17,26 +17,34 @@ const ControladorPrivador = {
         if (error) {
           respuesta.json({
             resultado: "mal",
-            mensaje: "ocurrió un error al subir imagen gorra",
+            mensaje: "ocurrió un error al subir imagen",
             datos: null,
           });
         } else {
           const nuevoProducto = new ModeloPrivado({
             nombre: solicitud.body.nombre,
+            tipoDocumento: solicitud.body.tipoDocumento,
             documento: solicitud.body.documento,
             fechaNacimiento: solicitud.body.fechaNacimiento,
             planViaje: solicitud.body.planViaje,
             fechaViaje: solicitud.body.fechaViaje,
             email: solicitud.body.email,
             numeroEmergencia: solicitud.body.numeroEmergencia,
+            marca: solicitud.body.marca,
+            modelo: solicitud.body.modelo,
+            anio: solicitud.body.anio,
+            cilindraje: solicitud.body.cilindraje,
+            fechaRTM: solicitud.body.fechaRTM,
+            fechaSoat: solicitud.body.fechaSoat,
+            fechaTDR: solicitud.body.fechaTDR,
             imagen: solicitud.file.filename,
           });
-          console.log("Valores: ", nuevoProducto);
+
           const productoCreado = await nuevoProducto.save();
           if (productoCreado._id) {
             respuesta.json({
-              resultado: "bien",
-              mensaje: "gorra creada",
+              resultado: "Bien",
+              mensaje: "Reserva creada",
               datos: productoCreado._id,
             });
           }
@@ -45,7 +53,7 @@ const ControladorPrivador = {
     } catch (error) {
       respuesta.json({
         resultado: "Mal",
-        mensaje: "Ocurrio un error al crear usuario!!",
+        mensaje: "Ocurrio un error al crear la reserva!!",
         datos: error,
       });
     }
@@ -60,14 +68,14 @@ const ControladorPrivador = {
       if (productoEncontrado._id) {
         respuesta.json({
           resultado: "Bien",
-          mensaje: "Producto leído",
+          mensaje: "Reserva leída",
           datos: productoEncontrado,
         });
       }
     } catch (error) {
       respuesta.json({
         resultado: "Mal",
-        mensaje: "Ocurrio un error al leer un producto!!",
+        mensaje: "Ocurrio un error al leer una reserva!!",
         datos: error,
       });
     }
@@ -77,15 +85,16 @@ const ControladorPrivador = {
   leerProductos: async (solicitud, respuesta) => {
     try {
       const productosEncontrados = await modeloPrivado.find();
+      console.log(productosEncontrados);
       respuesta.json({
         resultado: "Bien",
-        mensaje: "Productos leídos",
+        mensaje: "Reservas leídas",
         datos: productosEncontrados,
       });
     } catch (error) {
       respuesta.json({
         resultado: "Mal",
-        mensaje: "Ocurrio un error al leer los productos!!",
+        mensaje: "Ocurrio un error al leer las reservas!!",
         datos: error,
       });
     }
@@ -101,14 +110,14 @@ const ControladorPrivador = {
       if (updateProducto._id) {
         respuesta.json({
           resultado: "Bien",
-          mensaje: "Producto actualizado",
+          mensaje: "Reserva Actualizada",
           datos: updateProducto,
         });
       }
     } catch (error) {
       respuesta.json({
         resultado: "Mal",
-        mensaje: "Ocurrio un error al actualizar el producto!!",
+        mensaje: "Ocurrio un error al actualizar la reserva!!",
         datos: error,
       });
     }
@@ -124,14 +133,14 @@ const ControladorPrivador = {
         await fs.unlink("imagenes/" + productoEliminado.imagen);
         respuesta.json({
           resultado: "Bien",
-          mensaje: "Producto eliminado",
+          mensaje: "Reserva eliminada",
           datos: null,
         });
       }
     } catch (error) {
       respuesta.json({
         resultado: "Mal",
-        mensaje: "Ocurrio un error al eliminar un producto!!",
+        mensaje: "Ocurrio un error al eliminar al eliminar la reserva!!",
         datos: error,
       });
     }
