@@ -19,6 +19,7 @@ const controladorInicioSesion = {
         const token = await generarToken({
           id: usuarioEncontrado._id,
           name: usuarioEncontrado.nombre,
+          email: usuarioEncontrado.correo,
         });
 
         respuesta.json({

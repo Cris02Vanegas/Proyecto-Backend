@@ -1,6 +1,5 @@
 import multer from "multer";
 import fs from "fs-extra";
-import ModeloPrivado from "../modelos/modeloPrivado.js";
 import modeloPrivado from "../modelos/modeloPrivado.js";
 
 const ControladorPrivador = {
@@ -21,7 +20,7 @@ const ControladorPrivador = {
             datos: null,
           });
         } else {
-          const nuevoProducto = new ModeloPrivado({
+          const nuevoProducto = new modeloPrivado({
             nombre: solicitud.body.nombre,
             tipoDocumento: solicitud.body.tipoDocumento,
             documento: solicitud.body.documento,
@@ -59,7 +58,7 @@ const ControladorPrivador = {
     }
   },
 
-  //leer un usuario
+  //leer una reserva
   leerProducto: async (solicitud, respuesta) => {
     try {
       const productoEncontrado = await modeloPrivado.findById(
@@ -81,11 +80,10 @@ const ControladorPrivador = {
     }
   },
 
-  //Leer Usuarios
+  //Leer Reservas
   leerProductos: async (solicitud, respuesta) => {
     try {
       const productosEncontrados = await modeloPrivado.find();
-      console.log(productosEncontrados);
       respuesta.json({
         resultado: "Bien",
         mensaje: "Reservas leídas",
@@ -100,7 +98,7 @@ const ControladorPrivador = {
     }
   },
 
-  //ActualizarUsuario
+  //ActualizarReserva
   actualizarProductos: async (solicitud, respuesta) => {
     try {
       const updateProducto = await modeloPrivado.findByIdAndUpdate(
@@ -123,7 +121,7 @@ const ControladorPrivador = {
     }
   },
 
-  //EliminarUsuariopost
+  //EliminarReserva
   eliminarProducto: async (solicitud, respuesta) => {
     try {
       const productoEliminado = await modeloPrivado.findByIdAndDelete(

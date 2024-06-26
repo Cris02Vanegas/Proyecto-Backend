@@ -1,3 +1,4 @@
+import path from "path";
 // Se trae el servidor de EXPRESS
 import express from "express";
 import cors from "cors";
@@ -16,6 +17,7 @@ servidor.use("/usuarios", enrutadorUsuarios);
 servidor.use("/inicio-sesion", enrutadorIniciarSesion);
 servidor.use("/contacto", enrutadorContacto);
 servidor.use("/privado", enrutadorPrivado);
+servidor.use("/imagenes", express.static(path.resolve("imagenes"))); //sirve para poner las paginas publicas en el front
 
 servidor.get("/", (solicitud, respuesta) => {
   respuesta.status(404).send("No encontrado");

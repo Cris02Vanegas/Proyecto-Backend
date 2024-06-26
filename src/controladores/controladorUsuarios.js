@@ -117,6 +117,3 @@ const ControladorUsuarios = {
 };
 
 export default ControladorUsuarios;
-
-/* const usuario = 
-} */
