@@ -138,7 +138,7 @@ const ControladorPrivador = {
     } catch (error) {
       respuesta.json({
         resultado: "Mal",
-        mensaje: "Ocurrio un error al eliminar al eliminar la reserva!!",
+        mensaje: "Ocurrio un error al eliminar!!",
         datos: error,
       });
     }
